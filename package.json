@@ -65,43 +65,80 @@
         {
           "command": "copy-line-reference.copyPath",
           "group": "9_cutcopypaste",
-          "when": "editorTextFocus"
+          "when": "editorTextFocus && config.copy-line-reference.showCopyPath"
         },
         {
           "command": "copy-line-reference.copyPathWithCode",
           "group": "9_cutcopypaste",
-          "when": "editorTextFocus"
+          "when": "editorTextFocus && config.copy-line-reference.showCopyPathWithCode"
         },
         {
           "command": "copy-line-reference.copyAbsolutePath",
           "group": "9_cutcopypaste",
-          "when": "editorTextFocus"
+          "when": "editorTextFocus && config.copy-line-reference.showCopyAbsolutePath"
         },
         {
           "command": "copy-line-reference.copyFilename",
           "group": "9_cutcopypaste",
-          "when": "editorTextFocus"
+          "when": "editorTextFocus && config.copy-line-reference.showCopyFilename"
         },
         {
           "command": "copy-line-reference.copyRelativePath",
           "group": "9_cutcopypaste",
-          "when": "editorTextFocus"
+          "when": "editorTextFocus && config.copy-line-reference.showCopyRelativePath"
         },
         {
           "command": "copy-line-reference.copyWorkspaceRelativePath",
           "group": "9_cutcopypaste",
-          "when": "editorTextFocus"
+          "when": "editorTextFocus && config.copy-line-reference.showCopyWorkspaceRelativePath"
         }
       ]
     },
     "configuration": {
       "title": "Copy Line Reference",
       "properties": {
+        "copy-line-reference.showCopyPath": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show 'Copy Path' in context menu (uses pathType setting)",
+          "order": 1
+        },
+        "copy-line-reference.showCopyPathWithCode": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show 'Copy Path with Code' in context menu (includes code snippet)",
+          "order": 2
+        },
+        "copy-line-reference.showCopyAbsolutePath": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show 'Copy Absolute Path' in context menu (full system path)",
+          "order": 3
+        },
+        "copy-line-reference.showCopyRelativePath": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show 'Copy Relative Path' in context menu (workspace relative)",
+          "order": 4
+        },
+        "copy-line-reference.showCopyWorkspaceRelativePath": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show 'Copy Workspace Relative Path' in context menu (with line numbers)",
+          "order": 5
+        },
+        "copy-line-reference.showCopyFilename": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show 'Copy Filename' in context menu (filename only)",
+          "order": 6
+        },
         "copy-line-reference.pathType": {
           "type": "string",
           "enum": ["relative", "absolute"],
           "default": "relative",
-          "description": "Choose between path types: relative (from workspace root) or absolute file path"
+          "description": "Default path type for 'Copy Path' command: relative (from workspace root) or absolute file path",
+          "order": 7
         }
       }
     }
