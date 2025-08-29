@@ -1,7 +1,7 @@
 {
-  "name": "vscode-ext-line",
-  "displayName": "VSCode Extension Line",
-  "description": "A VSCode extension for copying relative file paths with line numbers.",
+  "name": "copy-line-reference",
+  "displayName": "Copy Line Reference",
+  "description": "A Visual Studio Code extension that copies file paths with line numbers in GitHub-style format. Works with both selected text and cursor position.",
   "version": "0.0.1",
   "license": "MIT",
   "repository": {
@@ -18,18 +18,92 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.copyRelativePathWithLine",
-        "title": "Copy Relative File Path + Line"
+        "command": "copy-line-reference.copyPath",
+        "title": "Copy Line Reference: Copy Path"
+      },
+      {
+        "command": "copy-line-reference.copyPathWithCode",
+        "title": "Copy Line Reference: Copy Path with Code"
+      },
+      {
+        "command": "copy-line-reference.copyAbsolutePath",
+        "title": "Copy Line Reference: Copy Absolute Path"
+      },
+      {
+        "command": "copy-line-reference.copyFilename",
+        "title": "Copy Line Reference: Copy Filename"
+      },
+      {
+        "command": "copy-line-reference.copyRelativePath",
+        "title": "Copy Line Reference: Copy Relative Path"
+      },
+      {
+        "command": "copy-line-reference.copyWorkspaceRelativePath",
+        "title": "Copy Line Reference: Copy Workspace Relative Path"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "copy-line-reference.copyPath",
+        "key": "cmd+alt+c",
+        "mac": "cmd+alt+c",
+        "win": "ctrl+alt+c",
+        "linux": "ctrl+alt+c",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "copy-line-reference.copyPathWithCode",
+        "key": "cmd+alt+shift+c",
+        "mac": "cmd+alt+shift+c",
+        "win": "ctrl+alt+shift+c",
+        "linux": "ctrl+alt+shift+c",
+        "when": "editorTextFocus"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "extension.copyRelativePathWithLine",
-          "group": "1_modification",
+          "command": "copy-line-reference.copyPath",
+          "group": "9_cutcopypaste",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "copy-line-reference.copyPathWithCode",
+          "group": "9_cutcopypaste",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "copy-line-reference.copyAbsolutePath",
+          "group": "9_cutcopypaste",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "copy-line-reference.copyFilename",
+          "group": "9_cutcopypaste",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "copy-line-reference.copyRelativePath",
+          "group": "9_cutcopypaste",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "copy-line-reference.copyWorkspaceRelativePath",
+          "group": "9_cutcopypaste",
           "when": "editorTextFocus"
         }
       ]
+    },
+    "configuration": {
+      "title": "Copy Line Reference",
+      "properties": {
+        "copy-line-reference.pathType": {
+          "type": "string",
+          "enum": ["relative", "absolute"],
+          "default": "relative",
+          "description": "Choose between path types: relative (from workspace root) or absolute file path"
+        }
+      }
     }
   },
   "scripts": {
