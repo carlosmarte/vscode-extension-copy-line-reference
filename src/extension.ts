@@ -87,7 +87,8 @@ function getOllamaConfig() {
     endpoint: config.get('ollamaEndpoint', 'http://localhost:11434'),
     model: config.get('ollamaModel', 'deepseek-r1:8b'),
     timeout: config.get('aiSummaryTimeout', 30000),
-    enabled: config.get('aiSummaryEnabled', true)
+    enabled: config.get('aiSummaryEnabled', true),
+    systemPrompt: config.get('defaultSystemPrompt', '')
   };
 }
 
@@ -140,12 +141,17 @@ async function getOllamaModels(endpoint: string, timeout: number): Promise<strin
 }
 
 // Summarize text using Ollama
-async function summarizeWithOllama(text: string, model: string, endpoint: string, timeout: number): Promise<string> {
-  const prompt = `Please provide a brief, technical summary (1-2 sentences) of this code snippet. Focus on what it does, not how it works:\n\n${text}`;
+async function summarizeWithOllama(text: string, model: string, endpoint: string, timeout: number, systemPrompt: string = ''): Promise<string> {
+  const basePrompt = `Please provide a brief, technical summary (1-2 sentences) of this code snippet. Focus on what it does, not how it works:\n\n${text}`;
+  
+  // Prepend system prompt if provided
+  const finalPrompt = systemPrompt.trim() 
+    ? `${systemPrompt.trim()}\n\n${basePrompt}`
+    : basePrompt;
   
   const payload = JSON.stringify({
     model: model,
-    prompt: prompt,
+    prompt: finalPrompt,
     stream: false,
     options: {
       temperature: 0.3,
@@ -167,7 +173,10 @@ async function summarizeWithOllama(text: string, model: string, endpoint: string
     const data = JSON.parse(response);
     
     if (data.response) {
-      return data.response.trim().replace(/\n+/g, ' ');
+      return data.response.trim()
+        .replace(/<think>[\s\S]*?<\/think>/gi, '') // Remove thinking tags
+        .replace(/\n+/g, ' ')
+        .trim();
     } else {
       throw new Error('No response from Ollama');
     }
@@ -366,7 +375,8 @@ async function copyPathWithAISummary(): Promise<void> {
         selectedText,
         ollamaConfig.model,
         ollamaConfig.endpoint,
-        ollamaConfig.timeout
+        ollamaConfig.timeout,
+        ollamaConfig.systemPrompt
       );
 
       progress.report({ increment: 70, message: "Formatting result..." });

@@ -14,6 +14,9 @@
   "categories": [
     "Other"
   ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -178,6 +181,12 @@
           "default": 30000,
           "description": "Timeout in milliseconds for AI summarization requests",
           "order": 12
+        },
+        "copy-line-reference.defaultSystemPrompt": {
+          "type": "string",
+          "default": "",
+          "description": "Default system prompt to prepend to AI summarization requests. This will be added before the technical summary prompt to provide context or instructions to the AI.",
+          "order": 13
         }
       }
     }
