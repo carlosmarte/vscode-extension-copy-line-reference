@@ -1,0 +1,56 @@
+{
+  "name": "vscode-ext-line",
+  "displayName": "VSCode Extension Line",
+  "description": "A VSCode extension for copying relative file paths with line numbers.",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/vscode-ext-line.git"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.copyRelativePathWithLine",
+        "title": "Copy Relative File Path + Line"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "extension.copyRelativePathWithLine",
+          "group": "1_modification",
+          "when": "editorTextFocus"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "glob": "^10.3.10",
+    "mocha": "^10.3.0",
+    "typescript": "^5.3.3",
+    "@vscode/test-electron": "^1.6.1"
+  }
+}
