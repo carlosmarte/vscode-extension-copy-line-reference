@@ -40,6 +40,10 @@
       {
         "command": "copy-line-reference.copyWorkspaceRelativePath",
         "title": "Copy Line Reference: Copy Workspace Relative Path"
+      },
+      {
+        "command": "copy-line-reference.copyPathWithAISummary",
+        "title": "Copy Line Reference: Copy Path with AI Summary"
       }
     ],
     "keybindings": [
@@ -91,6 +95,11 @@
           "command": "copy-line-reference.copyWorkspaceRelativePath",
           "group": "9_cutcopypaste",
           "when": "editorTextFocus && config.copy-line-reference.showCopyWorkspaceRelativePath"
+        },
+        {
+          "command": "copy-line-reference.copyPathWithAISummary",
+          "group": "9_cutcopypaste",
+          "when": "editorTextFocus && config.copy-line-reference.showCopyPathWithAISummary && config.copy-line-reference.aiSummaryEnabled"
         }
       ]
     },
@@ -139,6 +148,36 @@
           "default": "relative",
           "description": "Default path type for 'Copy Path' command: relative (from workspace root) or absolute file path",
           "order": 7
+        },
+        "copy-line-reference.showCopyPathWithAISummary": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show 'Copy Path with AI Summary' in context menu (requires Ollama)",
+          "order": 8
+        },
+        "copy-line-reference.aiSummaryEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable AI summarization features (requires Ollama server)",
+          "order": 9
+        },
+        "copy-line-reference.ollamaEndpoint": {
+          "type": "string",
+          "default": "http://localhost:11434",
+          "description": "Ollama server endpoint URL",
+          "order": 10
+        },
+        "copy-line-reference.ollamaModel": {
+          "type": "string",
+          "default": "deepseek-r1:8b",
+          "description": "Ollama model to use for AI summarization",
+          "order": 11
+        },
+        "copy-line-reference.aiSummaryTimeout": {
+          "type": "number",
+          "default": 30000,
+          "description": "Timeout in milliseconds for AI summarization requests",
+          "order": 12
         }
       }
     }
